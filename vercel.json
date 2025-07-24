@@ -1,22 +1,18 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
+  "framework": "nextjs",
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install",
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
     }
-  ],
+  },
   "env": {
     "NODE_ENV": "production"
   },
   "build": {
     "env": {
       "NODE_ENV": "production"
-    }
-  },
-  "functions": {
-    "src/app/api/**/*.ts": {
-      "maxDuration": 30
     }
   }
 }
