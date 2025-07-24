@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+model Product {
+    id           String  @id @default(cuid())
+    name         String
+    description  String
+    materialInfo String?
+    price        Float
+    salePrice    Float?
+    images       String  // Comma-separated URLs
+    type         String
+    width        Float?
+    height       Float?
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    // Relations
+    cartItems   CartItem[]
+    orderItems  OrderItem[]
+
+    @@index([type])
+    @@index([price])
+    @@index([createdAt])
+}
+
+model Cart {
+    id        String     @id @default(cuid())
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+
+    // Relations
+    items     CartItem[]
+
+    @@index([createdAt])
+}
+
+model CartItem {
+    id        String   @id @default(cuid())
+    quantity  Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations
+    cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+    cartId    String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+    productId String
+
+    @@unique([cartId, productId])
+    @@index([cartId])
+    @@index([productId])
+}
+
+model Order {
+    id                String    @id @default(cuid())
+    orderNumber       String    @unique
+    fullName          String
+    email             String
+    phone             String
+    address           String
+    total             Float
+    status            String    @default("beklemede")
+    cancellationReason String?  // Reason for cancellation if order is cancelled
+    cancelledAt       DateTime? // When the order was cancelled
+    cancelledBy       String?   // Who cancelled the order (admin email/id)
+    createdAt         DateTime  @default(now())
+    updatedAt         DateTime  @updatedAt
+
+    // Relations
+    items             OrderItem[]
+
+    @@index([orderNumber])
+    @@index([email])
+    @@index([status])
+    @@index([createdAt])
+}
+
+model OrderItem {
+    id        String   @id @default(cuid())
+    quantity  Int
+    price     Float    // Price at time of order
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations
+    order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+    orderId   String
+    product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+    productId String
+
+    @@index([orderId])
+    @@index([productId])
+}
+
+model Contact {
+    id        Int      @id @default(autoincrement())
+    name      String
+    email     String
+    phone     String
+    subject   String
+    message   String
+    status    String   @default("new")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([email])
+    @@index([createdAt])
+    @@index([status])
+}
