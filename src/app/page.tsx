@@ -20,29 +20,29 @@ export default async function HomePage() {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="from-primary-50 relative bg-gradient-to-b to-white py-20">
+      <section className="from-primary-50 relative bg-gradient-to-b to-white py-12">
         <div className="container mx-auto px-4">
-          <div className="grid items-center gap-8 md:grid-cols-2">
-            <div className="order-2 md:order-1">
-              <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
+          <div className="grid items-center gap-12 lg:grid-cols-5">
+            <div className="order-2 lg:order-1 lg:col-span-2">
+              <h1 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 lg:text-4xl">
                 El Yapımı Özel{" "}
                 <span className="text-primary-700">Çantalar</span>
               </h1>
-              <p className="mb-6 text-lg text-gray-600">
+              <p className="mb-6 text-base text-gray-600 lg:text-lg">
                 Her biri eşsiz, özenle hazırlanmış el yapımı çantalar ve takılar
                 ile tarzınızı tamamlayın.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/urunler"
-                  className="bg-primary-600 hover:bg-primary-700 rounded-lg px-5 py-3 text-center font-medium text-white"
+                  className="bg-primary-600 hover:bg-primary-700 rounded-lg px-5 py-3 text-center font-medium text-white transition-colors"
                 >
                   Ürünleri Keşfet
                 </Link>
               </div>
             </div>
-            <div className="order-1 md:order-2">
-              <div className="relative h-80 overflow-hidden rounded-lg md:h-96">
+            <div className="order-1 lg:order-2 lg:col-span-3">
+              <div className="relative h-64 overflow-hidden rounded-xl sm:h-80 lg:h-96">
                 <HeroImageCarousel productImages={heroImages} />
               </div>
             </div>
@@ -51,7 +51,7 @@ export default async function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16">
+      <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 md:grid-cols-3">
             <div className="rounded-lg p-6 text-center shadow-sm">
@@ -133,7 +133,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-gray-50 py-12">
         <div className="container mx-auto px-4">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="text-3xl font-bold text-gray-900">
