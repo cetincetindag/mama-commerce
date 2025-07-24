@@ -19,7 +19,9 @@ export const ourFileRouter = {
       console.log("Upload complete for admin:", metadata.uploadedBy);
       console.log("file url", file.url);
 
-      // Return metadata to be passed to the client
+      // Note: Image optimization happens client-side before upload
+      // using the OptimizedUploadDropzone component
+      
       return { uploadedBy: metadata.uploadedBy, url: file.url };
     }),
 } satisfies FileRouter;

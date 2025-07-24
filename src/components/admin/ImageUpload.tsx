@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import Image from 'next/image';
-import { UploadDropzone } from '@/utils/uploadthing';
+import { OptimizedUploadDropzone } from '@/utils/uploadthing';
 
 interface ImageUploadProps {
   onImagesChange: (urls: string[]) => void;
@@ -25,25 +25,30 @@ export default function ImageUpload({ onImagesChange, initialImages = [] }: Imag
         Product Images
       </label>
       
-      {/* UploadThing Upload Area */}
-      <UploadDropzone
-        endpoint="productImageUploader"
-        onClientUploadComplete={(res) => {
-          // Do something with the response
-          if (res) {
-            const newUrls = res.map((file) => file.url);
-            const updatedImages = [...images, ...newUrls];
-            setImages(updatedImages);
-            onImagesChange(updatedImages);
-          }
-        }}
-        onUploadError={(error: Error) => {
-          alert(`ERROR! ${error.message}`);
-        }}
-        config={{
-          mode: "auto",
-        }}
-      />
+      {/* Optimized UploadThing Upload Area with automatic image compression */}
+      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+        <div className="mb-2 text-sm text-gray-600">
+          📸 Images will be automatically optimized before upload to reduce file size
+        </div>
+        <OptimizedUploadDropzone
+          endpoint="productImageUploader"
+          onClientUploadComplete={(res) => {
+            // Do something with the response
+            if (res) {
+              const newUrls = res.map((file: unknown) => (file as { url: string }).url);
+              const updatedImages = [...images, ...newUrls];
+              setImages(updatedImages);
+              onImagesChange(updatedImages);
+            }
+          }}
+          onUploadError={(error: Error) => {
+            alert(`ERROR! ${error.message}`);
+          }}
+          config={{
+            mode: "auto",
+          }}
+        />
+      </div>
 
       {/* Image Preview Grid */}
       {images.length > 0 && (
