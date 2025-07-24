@@ -14,6 +14,7 @@ export const env = createEnv({
     JWT_SECRET: z.string().min(1),
     ADMIN_PASSWORD_HASH: z.string().min(1),
     ADMIN_USERNAME: z.string().optional(),
+    UPLOADTHING_TOKEN: z.string().min(1),
   },
 
   /**
@@ -35,6 +36,7 @@ export const env = createEnv({
     JWT_SECRET: process.env.JWT_SECRET,
     ADMIN_PASSWORD_HASH: process.env.ADMIN_PASSWORD_HASH,
     ADMIN_USERNAME: process.env.ADMIN_USERNAME,
+    UPLOADTHING_TOKEN: process.env.UPLOADTHING_TOKEN,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
